@@ -70,7 +70,7 @@ if (!isMatch) {
 // jwt token
 const token = jwt.sign(
   { id: user._id },
-  "this is secret",
+  process.env.secret,
   { expiresIn: "7d" }
 );
 res.json({
