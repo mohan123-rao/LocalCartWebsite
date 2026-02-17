@@ -16,7 +16,7 @@ const Mail = require('nodemailer/lib/mailer')
 app.use(express.json())
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/mydatabase')
+mongoose.connect(process.env.MongoDb_url)
 .then(()=>{
 console.log("mongodb connected successfully")
 })
