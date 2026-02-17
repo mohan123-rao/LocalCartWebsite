@@ -13,6 +13,7 @@ const dotenv = require('dotenv').config()
 const nodemailer = require('nodemailer')
 const authMiddleware = require('./authMiddleware')
 const Mail = require('nodemailer/lib/mailer')
+const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(cors());
 
@@ -296,6 +297,6 @@ try{
 }
 })
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
 console.log("server is created")
 })
