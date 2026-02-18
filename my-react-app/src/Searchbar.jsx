@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./login.css";
 import { Link } from "react-router-dom";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const Searchbar = () => {
     const [query, setQuery] = useState("");
@@ -16,7 +17,7 @@ const Searchbar = () => {
         }
 
         const res = await axios.get(
-            `http://localhost:3000/searchRes?q=${value}`
+            `${baseURL}/searchRes?q=${value}`
         );
         setRestaurants(res.data);
     };
