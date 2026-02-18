@@ -19,7 +19,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/restaurants');
+        const res = await axios.get(`${baseURL}/restaurants`);
         setRestaurants(res.data);
         setLoading(false);
       } catch (err) {
