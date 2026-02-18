@@ -3,6 +3,7 @@ import './App.css'
 import './login.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Signup() {
   const [name,setName] = useState();
@@ -15,7 +16,7 @@ function Signup() {
     e.preventDefault()
     console.log(name)
     try {
-      const res = await axios.post('http://localhost:3000/signup',{name,email,password});
+      const res = await axios.post(`${baseURL}/signup`,{name,email,password});
       console.log('Signup data added:', res.data);
       alert('SignUp successfully!');
       navigate('/login')
