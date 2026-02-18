@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const LoginRes = () => {
     const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ const LoginRes = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/restaurantlogin",
+        `${baseURL}/restaurantlogin`,
         { email, password }
       );
       alert("Login successful!");
