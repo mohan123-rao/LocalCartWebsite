@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EditItem from "./Edititem";
 import { useNavigate } from "react-router-dom";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
   const [data, setData] = useState(null);
@@ -23,8 +24,8 @@ const navigator = useNavigate()
         // profile
         const profileUrl =
           role === "restaurant"
-            ? "http://localhost:3000/restaurant/profile"
-            : "http://localhost:3000/customer/profile";
+            ? `${baseURL}/restaurant/profile`
+            : `${baseURL}/customer/profile`;
 
         const res = await axios.get(profileUrl, {
           headers: { Authorization: `Bearer ${token}` },
@@ -35,8 +36,8 @@ const navigator = useNavigate()
         // extra data
         const extraUrl =
           role === "restaurant"
-            ? "http://localhost:3000/restaurant/items"
-            : "http://localhost:3000/customer/orders";
+            ? `${baseURL}/restaurant/items`
+            : `${baseURL}/customer/orders`;
 
         const res2 = await axios.get(extraUrl, {
           headers: { Authorization: `Bearer ${token}` },
