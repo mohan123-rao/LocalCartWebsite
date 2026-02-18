@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EditItem from "./Edititem";
+import EditItem from "./EditItem";
 import { useNavigate } from "react-router-dom";
 const baseURL = import.meta.env.VITE_API_URL;
 
