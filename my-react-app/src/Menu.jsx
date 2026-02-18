@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const Menu = () => {
   const { restaurantId } = useParams();
   const [items, setItems] = useState([]);
   const [orderitems, setOrderitems] = useState([]);
 
-  // ✅ correct naming (match backend)
+  //  correct naming (match backend)
   const [address, setAddress] = useState({
     city: "",
     area: "",
@@ -31,7 +32,7 @@ const Menu = () => {
 
   // place order
   const Placeorder = async () => {
-    // ✅ validations
+    // validations
     if (orderitems.length === 0) {
       alert("Add at least one item");
       return;
@@ -43,7 +44,7 @@ const Menu = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/senditems", {
+      await axios.post(`${baseURL}/senditems`, {
         orderitems,
         address,
         resId: restaurantId,
@@ -53,9 +54,9 @@ const Menu = () => {
         },
       });
 
-      alert("Your Order placed successfully 🎉");
+      alert("Your Order placed successfully.");
 
-      // ✅ reset
+      // reset
       setOrderitems([]);
       setAddress({ city: "", area: "", nearby: "" });
 
@@ -72,7 +73,7 @@ const Menu = () => {
     const fetchItems = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/items/${restaurantId}`
+          `${baseURL}/items/${restaurantId}`
         );
         setItems(res.data);
       } catch (err) {
