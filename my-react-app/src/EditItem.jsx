@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const EditItem = ({ itemData, token }) => {
   const [item, setItem] = useState(itemData.item);
@@ -8,7 +9,7 @@ const EditItem = ({ itemData, token }) => {
   const updateItem = async () => {
     try {
       await axios.put(
-        `http://localhost:3000/restaurant/items/${itemData._id}`,
+        `${baseURL}/restaurant/items/${itemData._id}`,
         { item, price },
         { headers: { Authorization: `Bearer ${token}` } }
       );
