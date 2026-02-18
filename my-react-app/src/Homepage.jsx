@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { recognition,speak } from './Voiceassistant';
 import { useNavigate } from 'react-router-dom';
+const baseURL = import.meta.env.VITE_API_URL;
 
 const Homepage = () => {
     const [restaurants, setRestaurants] = useState([]);
