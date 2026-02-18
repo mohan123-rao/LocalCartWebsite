@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { recognition,speak } from "./Voiceassistant.jsx";
 import { useEffect } from "react";
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if(!localStorage.getItem("userToken")) {
@@ -23,11 +25,11 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/login",
+        `${baseURL}/login`,
         { email, password }
       );
 
-      // ✅ store only the token
+      //  store only the token
       localStorage.setItem("userToken", res.data.token);
       localStorage.setItem("role","customer")
       console.log(res.data.token)
