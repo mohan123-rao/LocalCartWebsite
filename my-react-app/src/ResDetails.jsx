@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { recognition } from './Voiceassistant';
 import { speak } from './Voiceassistant';
+const baseURL = import.meta.env.VITE_API_URL;
 
 
 const ResDetails = () => {
@@ -41,7 +42,7 @@ const ResDetails = () => {
         console.log(resAccData)
 
         try {
-      const res = await axios.post('http://localhost:3000/restaurant',resAccData);
+      const res = await axios.post(`${baseURL}/restaurant`,resAccData);
       console.log('Restaurant added:', res.data);
       alert('Restaurant added successfully!');
       navigate('/loginRes')
