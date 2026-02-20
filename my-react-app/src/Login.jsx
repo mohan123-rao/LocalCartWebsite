@@ -9,6 +9,8 @@ const baseURL = import.meta.env.VITE_API_URL;
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false)
+  
   const navigate = useNavigate();
   
 
@@ -22,7 +24,7 @@ function Login() {
 
   const FormSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true)
     try {
       const res = await axios.post(
         `${baseURL}/login`,
@@ -33,7 +35,7 @@ function Login() {
       localStorage.setItem("userToken", res.data.token);
       localStorage.setItem("role","customer")
       console.log(res.data.token)
-
+      setLoading(false)
       alert("Login successful!");
       navigate("/");
 
@@ -66,8 +68,12 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           /><br /><br />
-
-          <button type="submit">Login</button><br /><br />
+          {!loading ? (
+      <button type="submit">Login</button><br /><br />
+          ):(
+      <button>Loading...</button><br /><br />
+          )}
+          
 
           <p>
             Don't have an account? <Link to="/signup">Sign Up</Link>
