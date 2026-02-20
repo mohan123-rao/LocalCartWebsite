@@ -9,14 +9,14 @@ const Profile = () => {
   const [extra, setExtra] = useState([]);
 
   const role = localStorage.getItem("role");
+  if(!role) {
+        navigator('/loginchoice');
+  }
   const token =
     role === "restaurant"
       ? localStorage.getItem("restaurantToken")
       : localStorage.getItem("userToken");
 const navigator = useNavigate()
-      if(!token) {
-        navigator('/loginchoice');
-      }
 
   useEffect(() => {
     const fetchAll = async () => {
