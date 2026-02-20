@@ -69,11 +69,11 @@ function Login() {
             required
           /><br /><br />
           {!loading ? (
-      <button type="submit">Login</button><br /><br />
+      <button type="submit">Login</button>
           ):(
-      <button>Loading...</button><br /><br />
+      <button>Loading...</button>
           )}
-          
+          <br /><br />
 
           <p>
             Don't have an account? <Link to="/signup">Sign Up</Link>
