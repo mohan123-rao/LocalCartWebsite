@@ -7,6 +7,7 @@ const Menu = () => {
   const { restaurantId } = useParams();
   const [items, setItems] = useState([]);
   const [orderitems, setOrderitems] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   //  correct naming (match backend)
   const [address, setAddress] = useState({
@@ -42,6 +43,7 @@ const Menu = () => {
       alert("Fill full address");
       return;
     }
+    setLoading(true)
 
     try {
       await axios.post(`${baseURL}/senditems`, {
@@ -54,6 +56,7 @@ const Menu = () => {
         },
       });
 
+      setLoading(false)
       alert("Your Order placed successfully.");
 
       // reset
@@ -129,8 +132,11 @@ const Menu = () => {
         placeholder="Nearby landmark"
       />
       <br />
-
+      {!loading ? (
       <button onClick={Placeorder}>Place Order</button>
+      ):(
+      <button>Loading...</button>
+      )}
     </div>
   );
 };
