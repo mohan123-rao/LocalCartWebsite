@@ -11,6 +11,8 @@ const baseURL = import.meta.env.VITE_API_URL;
 const ResDetails = () => {
     const [noitems,setNoitems] = useState()
     const [step, setStep] = useState("resName");
+    const [loading, setLoading] = useState(false)
+
     const [resAccData,setResaccData] = useState({
         resName:"",
         email:"",
@@ -40,19 +42,18 @@ const ResDetails = () => {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         console.log(resAccData)
-
+        setLoading(true)
         try {
       const res = await axios.post(`${baseURL}/restaurant`,resAccData);
       console.log('Restaurant added:', res.data);
+        setLoading(false)
       alert('Restaurant added successfully!');
       navigate('/loginRes')
 
     } catch (err) {
       console.error('Error adding restaurant:', err);
       alert('Failed to add restaurant');
-    }
-
-        
+    }     
     }
 
     console.log(noitems)
@@ -84,7 +85,11 @@ const ResDetails = () => {
                 <input type='number' name="estimatedDeliveryTime"  value={resAccData.estimatedDeliveryTime}onChange={handleChange} placeholder='estimatedDeliveryTime'/><br/><br/>
                 No of items:<br/>
               <br></br>
-                <button type='submit'>Create Account</button>
+                {!loading ? (
+            <button type='submit'>Create Account</button>
+                ):(
+            <button>Loading...</button>
+                )}
             </form>
         </div>
     )
