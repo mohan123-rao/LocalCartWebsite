@@ -211,57 +211,53 @@ pass:process.env.pass
 })
 
 app.post("/senditems", authMiddleware, async (req, res) => {
-  const { orderitems, address,resId} = req.body;
-try {
-if(!address){
-  return res.status(400).json({ message: "Delivery address is required" });
-  console.log("delivery address is required")
-}
+  const { orderitems, address, resId } = req.body;
 
+  try {
+    if (!address) {
+      return res.status(400).json({ message: "Delivery address is required" });
+    }
 
-const resData = await Restaurant.findById(resId);
-if (!resData) {
-  return res.status(404).json({ message: "Restaurant not found" });
-}
+    const resData = await Restaurant.findById(resId);
 
-const itemsText = orderitems
-  .map(i => `${i.item} - ₹${i.price}`)
-  .join("\n");
+    if (!resData) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
 
-await transporter.sendMail({
-  from: process.env.email,
-  to: resData.email,
-  subject: "New Order Received 🍽️",
-  text: `Order Details:\n\n${itemsText}
-  \n\nDelivery Address:\n\ncity:${address.city}
-  \narea:${address.area}
-  \nnearby:${address.nearby}
-  \n\nPlease prepare the order for delivery!`,
-});
-res.status(201).json({ message: "Order placed" });
-} catch (err) {
-console.error(err);
-res.status(500).json({ message: err.message });
-}
+    const itemsText = orderitems
+      .map(i => `${i.item} - ₹${i.price}`)
+      .join("\n");
 
-try{
-  const order = new Order({
-customerId:req.restaurant.id,
-restaurantId:resId,
-items:orderitems,
-totalAmount:orderitems.reduce((total, item) => total + item.price, 0),
-address:{
-  city:address.city,
-  area:address.area,
-  nearby:address.nearby
-}
-  })
-  await order.save()
-}catch(err){
-  console.log(err)
-}
+    await transporter.sendMail({
+      from: process.env.email,
+      to: resData.email,
+      subject: "New Order Received 🍽️",
+      text: `Order Details:\n\n${itemsText}
+      
+Delivery Address:
+city:${address.city}
+area:${address.area}
+nearby:${address.nearby}`
+    });
+
+    // SAVE ORDER
+    const order = new Order({
+      customerId: req.restaurant.id,
+      restaurantId: resId,
+      items: orderitems,
+      totalAmount: orderitems.reduce((total, item) => total + item.price, 0),
+      address
+    });
+    await order.save();
+
+    res.status(201).json({ message: "Order placed successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
 });
 
+  
 app.get('/customer/orders',authMiddleware, async (req,res)=>{
 try{
   const orders = await Order.find({customerId:req.restaurant.id}).populate('restaurantId','resName')
