@@ -9,9 +9,13 @@ const Profile = () => {
   const [extra, setExtra] = useState([]);
 const navigator = useNavigate()
   const role = localStorage.getItem("role");
-  if(!role) {
-        navigator('/loginchoice');
+  
+useEffect(() => {
+  if (!role) {
+    navigator("/loginchoice");
   }
+}, [role, navigator]);
+  
   const token =
     role === "restaurant"
       ? localStorage.getItem("restaurantToken")
