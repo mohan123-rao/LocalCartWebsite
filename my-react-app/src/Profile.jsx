@@ -7,7 +7,7 @@ const baseURL = import.meta.env.VITE_API_URL;
 const Profile = () => {
   const [data, setData] = useState(null);
   const [extra, setExtra] = useState([]);
-
+const navigator = useNavigate()
   const role = localStorage.getItem("role");
   if(!role) {
         navigator('/loginchoice');
@@ -16,7 +16,6 @@ const Profile = () => {
     role === "restaurant"
       ? localStorage.getItem("restaurantToken")
       : localStorage.getItem("userToken");
-const navigator = useNavigate()
 
   useEffect(() => {
     const fetchAll = async () => {
