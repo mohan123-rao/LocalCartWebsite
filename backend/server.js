@@ -246,7 +246,11 @@ nearby:${address.nearby}`
       restaurantId: resId,
       items: orderitems,
       totalAmount: orderitems.reduce((total, item) => total + item.price, 0),
-      address
+      address:{
+city:address.city,
+area:address.area,
+nearby:address.nearby
+}
     });
     await order.save();
 
